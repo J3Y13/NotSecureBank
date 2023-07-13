@@ -51,6 +51,7 @@ public class FeedbackAPI extends NotSecureBankAPI {
             email = ESAPI.encoder().encodeForHTML((String) myJson.get("email"));
             subject = ESAPI.encoder().encodeForHTML((String) myJson.get("subject"));
             comments = ESAPI.encoder().encodeForHTML((String) myJson.get("message"));
+            // essendo già stati sanificati gli input dell'utente nella fix <V5>, non è possibile salvare nel database codice javascript
         } catch (JSONException e) {
             LOG.error(e.toString());
             return Response.status(400).entity("{\"Error\": \"Body does not contain all the correct attributes\"}").build();
