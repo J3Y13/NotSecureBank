@@ -34,6 +34,7 @@ dependencies {
     implementation 'log4j:log4j:1.2.16'
     implementation 'org.apache.wink:wink-json4j:1.4'
     compileOnly 'javax:javaee-api:6.0'
+    implementation 'org.owasp.esapi:esapi:2.2.3.1'
 }
 
 war {
