@@ -82,6 +82,9 @@
 		    <span id="soapResp" name="soapResp" align="center" />
 		    </td>
 		  </tr>
+		  <tr>
+		  	<td><input type="hidden" name="csrfToken" value="<%=request.getSession().getAttribute("csrfToken") %>"></td>
+		  </tr>
 		</table>
 		</form>
 		

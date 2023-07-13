@@ -3,8 +3,10 @@ package com.notsecurebank.util;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.security.SecureRandom;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.HashMap;
 import java.util.UUID;
 import java.util.regex.Pattern;
@@ -32,6 +34,7 @@ public class ServletUtil {
     public static final String SESSION_ATTR_ADMIN_VALUE = "notsecurebankadmin";
     public static final String SESSION_ATTR_ADMIN_KEY = "admin";
     public static final String SESSION_ATTR_PREAPPROVEDFORGOLDVISA = "preApprovedForGoldVisa";
+    public static final String SESSION_ATTR_CSRF_TOKEN = "csrfToken";
 
     public static HashMap<String, String> demoProperties = null;
     public static File logFile = null;
@@ -213,6 +216,7 @@ public class ServletUtil {
             String accountStringList = Account.toBase64List(accounts);
             Cookie accountCookie = new Cookie(ServletUtil.NOT_SECURE_BANK_COOKIE, accountStringList);
             session.setAttribute(ServletUtil.SESSION_ATTR_USER, user);
+            generateCsrfToken(session);
             return accountCookie;
         } catch (SQLException e) {
             LOG.error(e.toString());
@@ -289,4 +293,13 @@ public class ServletUtil {
         request.getSession().setAttribute("specialPrizeCode", specialPrizeCode);
         return specialPrizeCode;
     }
+
+    private static void generateCsrfToken(HttpSession session) {
+        byte[] randomBytes = new byte[256];
+        new SecureRandom().nextBytes(randomBytes);
+        String csrfToken = Base64.getUrlEncoder().encodeToString(randomBytes);
+
+        session.setAttribute(ServletUtil.SESSION_ATTR_CSRF_TOKEN, csrfToken);
+    }
+    
 }
