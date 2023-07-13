@@ -20,6 +20,7 @@
 		%>
 		
 		<%  try { %>
+			content = ServletUtil.sanitizeHtmlWithRegex(content);
 			<jsp:include page="<%= content %>"/>
 		<%  } catch (Exception e) { %>
 			<p>Failed due to <%= ServletUtil.sanitizeHtmlWithRegex(e.getLocalizedMessage()) %></p>
