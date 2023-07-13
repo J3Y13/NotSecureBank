@@ -238,6 +238,26 @@ public class ServletUtil {
         LOG.info("True.");
         return true;
     }
+    
+    static public boolean isAdminLoggedin(HttpServletRequest request) {
+        LOG.info("Is Admin logged in?");
+
+        try {
+            // Check admin is logged in
+            String adminValue = (String) request.getSession().getAttribute(ServletUtil.SESSION_ATTR_ADMIN_KEY);
+            if (adminValue != ServletUtil.SESSION_ATTR_ADMIN_VALUE) {
+                LOG.info("False.");
+                return false;
+            }
+        } catch (Exception e) {
+            LOG.error(e.toString());
+            LOG.info("False.");
+            return false;
+        }
+
+        LOG.info("True.");
+        return true;
+    }
 
     static public User getUser(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute(ServletUtil.SESSION_ATTR_USER);
